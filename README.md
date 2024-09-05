@@ -1,66 +1,136 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+# Instrucciones para configurar y ejecutar el proyecto
 
-## About Laravel
+Este documento describe los pasos necesarios para configurar y ejecutar el proyecto, desde la creación inicial hasta la implementación de rutas, controladores, pruebas y documentación con Swagger.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 1. Creación del Proyecto
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Primero, iniciamos el proyecto utilizando el framework que hayas elegido (por ejemplo, Laravel). 
+Una vez creado tambien considerar configurar el .env
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+```bash
+# Ejemplo en Laravel
+composer create-project --prefer-dist laravel/laravel asignacion-solicitudesx
+```
 
-## Learning Laravel
+## 2. Creación de Archivos de Migraciones
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Las migraciones permiten gestionar la base de datos de forma controlada. Crea los archivos de migraciones necesarios para las tablas que tu proyecto requerirá.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+```bash
+# Crear una nueva migración
+php artisan make:migration create_nombre_de_tabla_table
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Modificr las migraciones para agregar las columnas y llaves necesarias para las tablas.
 
-## Laravel Sponsors
+## 3. Creación de los Modelos
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+Definir los modelos correspondientes a las tablas creadas en las migraciones. 
 
-### Premium Partners
+```bash
+# Crear un modelo
+php artisan make:model NombreDelModelo
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+Definir las relaciones entre modelos si es necesario, como `hasMany`, `belongsTo`, etc.
 
-## Contributing
+## 4. Ejecutar las Migraciones
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Después de haber configurado las migraciones y modelos, ejecutar las migraciones para el efecto
 
-## Code of Conduct
+```bash
+# Ejecutar todas las migraciones
+php artisan migrate
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## 5. Creación de los Seeders
 
-## Security Vulnerabilities
+Los seeders permiten llenar la base de datos con datos de prueba o predeterminados.
+```bash
+# Crear un seeder
+php artisan make:seeder NombreDelSeeder
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Luego, dentro de cada seeder, definir los datos que se quiere insetar
 
-## License
+```bash
+# Ejecutar los seeders
+php artisan db:seed
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## 6. Creación de los Controladores
+
+Crea los controladores necesarios para el proyecto:
+
+```bash
+# Crear un controlador
+php artisan make:controller NombreDelControlador
+```
+
+Dentro de los controladores, definir los métodos para manejar las solicitudes HTTP (GET, POST, PUT, DELETE) y conectar con los modelos para interactuar con la base de datos.
+
+## 7. Definición de Rutas
+
+Las rutas determinan cómo se accede a los controladores desde la aplicación.
+
+```php
+Route::get('/ruta', [NombreDelControlador::class, 'metodo']);
+```
+## 8. Creación de las Pruebas
+
+Crear pruebas unitaris si asi se requiere
+
+```bash
+# Crear un test
+php artisan make:test NombreDelTest
+```
+
+Definir las pruebas necesarias en el archivo generado para validar la lógica de negocio, o de la API.
+
+```bash
+# Ejecutar las pruebas
+php artisan test
+```
+
+## 9. Documentación con Swagger
+
+Instalar y configura Swagger en tu proyecto para generar automáticamente la documentación de las rutas y controladores.
+
+### Instalación de Swagger
+
+Para Laravel, puedes usar una biblioteca como `DarkaOnLine/L5-Swagger`.
+
+```bash
+# Instalar Swagger en Laravel
+composer require "darkaonline/l5-swagger"
+```
+
+Luego, publica los archivos de configuración:
+
+```bash
+php artisan vendor:publish --provider "L5Swagger\L5SwaggerServiceProvider"
+```
+
+Para generar la documentación, ejecutar el siguiente comando:
+
+```bash
+# Generar la documentación
+php artisan l5-swagger:generate
+```
+
+La documentación estará disponible en la ruta `/api/documentation`.
+
+## 10. Levantar el Proyecto
+
+Finalmente, levanta el proyecto en un entorno de desarrollo para comprobar que todo funciona correctamente. 
+```bash
+# Iniciar el servidor de desarrollo en Laravel
+php artisan serve
+```
+
+Ahora, el proyecto estará disponible en `http://localhost:8000`. Si todo está configurado correctamente, podrás interactuar con las rutas y ver la documentación generada por Swagger.
+
+---
+
+Con estos pasos, habrás completado la configuración y ejecución del proyecto.
