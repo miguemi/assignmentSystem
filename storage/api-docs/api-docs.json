@@ -1,0 +1,83 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API de Asignación de Solicitudes",
+        "description": "Documentación de la API de Asignación de Solicitudes",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/requests": {
+            "post": {
+                "tags": [
+                    "Requests"
+                ],
+                "summary": "Crea una nueva solicitud",
+                "description": "Crea una solicitud con título y descripción",
+                "operationId": "fb2793dd5e4fba78fef70d2a12a16e35",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "title",
+                                    "description"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "type": "string",
+                                        "example": "Problema en servidor"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "El servidor se cayó y no responde."
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Solicitud creada correctamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "title": {
+                                            "type": "string",
+                                            "example": "Problema en servidor"
+                                        },
+                                        "description": {
+                                            "type": "string",
+                                            "example": "El servidor se cayó y no responde."
+                                        },
+                                        "status": {
+                                            "type": "string",
+                                            "example": "pending"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Error en la validación"
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Requests",
+            "description": "Requests"
+        }
+    ]
+}
