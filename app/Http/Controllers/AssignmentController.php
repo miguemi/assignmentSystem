@@ -38,9 +38,13 @@ class AssignmentController extends Controller
                 $nextUser = $lastAssignment ? $lastAssignment->user_id + 1 : $users->first()->id;
                 $assignedUser = $users->find($nextUser) ?? $users->first();
                 break;
-            case 'equity':
-                $assignedUser = $users->sortBy(fn($user) => $user->assignments->count())->first();
-                break;
+                case 'equity':
+                    // Aquí modificamos el algoritmo para evitar erro cuando no hay asignaciones
+                    $assignedUser = $users->sortBy(function ($user) {
+                        // Si el usuario no tiene asignaciones, devolver 0
+                        return $user->assignments ? $user->assignments->count() : 0;
+                    })->first();
+                    break;
             case 'direct':
                 if (isset($validatedData['user_id'])) {
                     $assignedUser = User::findOrFail($validatedData['user_id']);
